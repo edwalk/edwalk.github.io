@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Migrating to Jekyll
+title: New Jekyll Blog
 tags: intro, jekyll
 ---
 
