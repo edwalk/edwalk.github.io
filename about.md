@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Welcome to Edward Walker's personal page.
+title: Hi, I'm Ed!
 permalink: /about/
 ---
-
-# Hi! I'm Ed.
 
 I'm a 30 year old aspiring data analyst currently working in the gaming industry. Welcome to my personal blog and page.
 In here, you will find a journal documenting my learning journey, some posts about different things I've figured out along the way, good resources I've come across and challenges I've run up against.
