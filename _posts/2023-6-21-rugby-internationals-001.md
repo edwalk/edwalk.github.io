@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rugby Internationals #001
+title: Rugby Internationals 001
 tags: rugby, psql, tableau
 ---
 

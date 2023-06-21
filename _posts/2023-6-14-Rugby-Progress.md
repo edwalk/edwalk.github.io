@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rugby Project #001
+title: Rugby Top 14 Project 001
 tags: rugby, API, python
 ---
 
