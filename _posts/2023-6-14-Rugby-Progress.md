@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Progress Report | Rugby data project
+title: Rugby Project #001
 tags: rugby, API, python
 ---
 
