@@ -10,11 +10,11 @@ As part of my visualisation, I was wanting to create a Top 10 highest scoring Si
 
 When I intially attempted the table, I ran into a frustrating issue: the different dimensions I was looking to surface (year, fixture) were nesting. In short, the following was happening (values for illustration purposes only):
 
-![Table showing nested years](images\my-images\yearscrewup_ri004.png)
+![Table showing nested years](..\images\my-images\yearscrewup_ri004.png)
 
 When I swapped the order of the dimensions, a similar problem occured when the same fixture from different years appeared in the table:
 
-![Table showing nested matchups](images\my-images\matchupscrewup_ri004.png)
+![Table showing nested matchups](..\images\my-images\matchupscrewup_ri004.png)
 
 This was particularly frustrating as it seemed to prevent true descending ordering: ordering would happen within each of the nested categories, and not across the entire table.
 
@@ -22,7 +22,7 @@ After fiddling around with different dimension orders, different options in Tabl
 
 To correct the issue, I re-extracted a new dataset including a unique ID column for each match. When added to a table, each entry was unique (due to the unique ID) and no nesting of subsequent dimensions occurred. This allow me to obtain, as intended:
 
-![Table showing the right Top 14 high scoring games table, ordered correctly](images\my-images\successful_ri004.png)
+![Table showing the right Top 14 high scoring games table, ordered correctly](..\images\my-images\successful_ri004.png)
 
 With accurate ordering across all the top 10 games highlighted in the visualisation.
 
