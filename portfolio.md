@@ -19,7 +19,7 @@ Repository link: [Customer Data](https://github.com/edwalk/portfolio-customer-da
 
 ## Customer Data Dashboard [Tableau]
 
-skills used: Tableau
+skills Used: Tableau
 
 Features:
 * This project mirrors the dashboard above in Tableau.
@@ -29,3 +29,14 @@ Features:
 ![Portfolio image](/images/customer-data-tableau.png)
 
 Repository link: [Customer Data](https://github.com/edwalk/portfolio-customer-data)
+
+## Top 14 Standings | 2005 - 2022 [Tableau]
+
+Skills used: Tableau
+
+Features:
+* The workbook contains two dashboards: one that provides general statistics on title wins, playoff apperances, number of seasons in the Top 14 and win/loss rates. The other allows the user to compare any two seasons by looking at the full standings.
+* Dataset compiled by myself using Data from Wikipedia & The Ligue Nationale de Rugby website.
+* Tableau Public link: [Rugby Top 14 2005-2022](https://public.tableau.com/app/profile/edward.walker3149/viz/RugbyTop142005-2022/Main)
+
+![Portfolio image](/images/top14-dashboard.png)
