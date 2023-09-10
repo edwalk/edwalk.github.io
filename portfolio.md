@@ -19,7 +19,7 @@ Repository link: [Customer Data](https://github.com/edwalk/portfolio-customer-da
 
 ## Customer Data Dashboard [Tableau]
 
-skills Used: Tableau
+Skills Used: Tableau
 
 Features:
 * This project mirrors the dashboard above in Tableau.
