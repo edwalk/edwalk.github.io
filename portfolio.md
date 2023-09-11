@@ -40,3 +40,14 @@ Features:
 * Tableau Public link: [Rugby Top 14 2005-2022](https://public.tableau.com/app/profile/edward.walker3149/viz/RugbyTop142005-2022/Main)
 
 ![Portfolio image](/images/top14-dashboard.png)
+
+## Formula 1 Queries [SQL]
+
+Skills used:
+* Intermediate SQL
+* Database creation
+* Data cleaning
+
+In this project, I answer a range of different questions about Formula 1 racing statistics and history by querying a motor racing dataset. This is primarily used as a way to practice and identify learning opportunities in SQL. Please note this project is dynamic and additional questions will be added as I continue to learn more SQL concepts.
+
+Repository link: [Formula 1 SQL Project](https://github.com/edwalk/portfolio-f1-sql)
