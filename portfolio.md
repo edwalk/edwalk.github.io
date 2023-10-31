@@ -51,3 +51,12 @@ Skills used:
 In this project, I answer a range of different questions about Formula 1 racing statistics and history by querying a motor racing dataset. This is primarily used as a way to practice and identify learning opportunities in SQL. Please note this project is dynamic and additional questions will be added as I continue to learn more SQL concepts.
 
 Repository link: [Formula 1 SQL Project](https://github.com/edwalk/portfolio-f1-sql)
+
+## Formula 1 Queries - Visualisation [Tableau]
+
+Skills used:
+* Tableau
+
+In this spin off project, I take some of the data from the queries above and create a small visualisation that allows people to compare major statistics across the decades in F1 (winners, racers, race numbers, points scorers, standings & points progression throughout individual seasons).
+
+You can find the visualisation here: [F1 Through The Decades](https://public.tableau.com/app/profile/edward.walker3149/viz/F1ThroughtheDecades/Decades#4)
