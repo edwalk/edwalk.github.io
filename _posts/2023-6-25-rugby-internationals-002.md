@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Rugby Internationals 002
-tags: rugby, psql, tableau
+tags: rugby, sql, tableau
 ---
 
 Today, I continued my work on the rugby internationals SQL / Tableau portfolio project.

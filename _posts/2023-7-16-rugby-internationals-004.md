@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Rugby Internationals 004
-tags: rugby, psql, tableau
+tags: rugby, sql, tableau
 ---
 
 I have been a little quiet recently, but my second portfolio project for Tableau using this rugby international matches dataset is progressing well. While I will provide a bigger update on the different things I have learned and attempted once the project is completed, there is one particular challenge that I wanted to debrief here.

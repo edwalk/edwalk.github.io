@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Rugby Internationals 001
-tags: rugby, psql, tableau
+tags: rugby, sql, tableau
 ---
 
 In order to focus solely on practicing SQL and Tableau visualisations, I downloaded a new dataset regrouping all international rugby results since 1871: [Kaggle](https://www.kaggle.com/datasets/lylebegbie/international-rugby-union-results-from-18712022).

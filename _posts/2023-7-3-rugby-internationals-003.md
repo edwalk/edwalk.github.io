@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Rugby Internationals 003
-tags: rugby, psql, tableau
+tags: rugby, sql, tableau
 ---
 
 Small progress today. I was able to finish my standings table query in order to generate a table that displays the standings points, wins, losses, and draws earned by each team each year prior to 2017 (and the standings points rule changes). The query runs into approximately 150 lines and is by far the most complex SQL query I have written so far. 
