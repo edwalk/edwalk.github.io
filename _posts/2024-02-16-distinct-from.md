@@ -14,7 +14,7 @@ In addition to some of the sparse updates I throw onto here, I thought I could s
 
  Unfortunately, upon running the query with a simple WHERE field != 'A', we noticed that only the records with 'B' were returned, an all null values were also excluded by the WHERE clause.
 
- # Why?
+# Why ?
 
  According to [this](https://stackoverflow.com/questions/67168963/why-does-snowflake-exclude-matching-null-values-in-where-clause) answer on Stack Overflow, when a WHERE statement condition is evaluated against each of the fields, the query will only retain those fields where the expression evaluates to TRUE. So in this instance, for WHERE field != 'A', any record containing 'A' return FALSE and be excluded from the output. However, field != 'A' will also return FALSE for any record containing a null value in the field. 
 
