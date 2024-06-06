@@ -10,6 +10,4 @@ You will also find portfolio projects that I create along the way.
 
 You can check out my LinkedIn profile [here](https://www.linkedin.com/in/edward-walker-uk/).
 
-### Contact me
-
-[Click here](mailto:contact.net979@silomails.com)
+### [Contact me](mailto:contact.net979@silomails.com)
