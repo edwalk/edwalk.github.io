@@ -12,4 +12,4 @@ You can check out my LinkedIn profile [here](https://www.linkedin.com/in/edward-
 
 ### Contact me
 
-[lr.edwardwalker@gmail.com](mailto:lr.edwardwalker@gmail.com)
+[Click here](mailto:contact.net979@silomails.com)
