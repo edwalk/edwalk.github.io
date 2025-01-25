@@ -4,7 +4,7 @@ title: Hi, I'm Ed!
 permalink: /about/
 ---
 
-I'm a 32 year data analyst currently working in the gaming industry. Welcome to my personal blog and page.
+I'm a 32 year old data analyst currently working in the gaming industry. Welcome to my personal blog and page.
 
 In here, you will find a journal documenting my learning journey, some posts about different things I've figured out along the way, good resources I've come across and challenges I've run up against.
 
