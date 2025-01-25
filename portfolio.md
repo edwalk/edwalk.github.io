@@ -4,6 +4,16 @@ title: Portfolio projects
 permalink: /portfolio/
 ---
 
+## Workout Wednesday
+
+![Portfolio image](/images/tableau.png)
+
+As a way to expand my skills and demonstrate my Tableau problem-solving skills, I have started contributing to Workout Wednesday, a global community with new Tableau-related challenges released every Wednesday.
+
+As an introduction, I have begun working through the Workout Wednesday Essentials series, a set of useful challenges for people new to the community.
+
+As I continue to contribute to this, you will find my Workout Wednesday solutions on my [Tableau Public Profile](https://public.tableau.com/app/profile/edward.walker3149/vizzes)
+
 ## Customer Data Dashboard [Microsoft Excel]
 
 Skills used: Excel, PowerQuery.
@@ -30,29 +40,9 @@ Features:
 
 Repository link: [Customer Data](https://github.com/edwalk/portfolio-customer-data)
 
-## Top 14 Standings | 2005 - 2022 [Tableau]
 
-Skills used: Tableau
 
-Features:
-* The workbook contains two dashboards: one that provides general statistics on title wins, playoff apperances, number of seasons in the Top 14 and win/loss rates. The other allows the user to compare any two seasons by looking at the full standings.
-* Dataset compiled by myself using Data from Wikipedia & The Ligue Nationale de Rugby website.
-* Tableau Public link: [Rugby Top 14 2005-2022](https://public.tableau.com/app/profile/edward.walker3149/viz/RugbyTop142005-2022/Main)
-
-![Portfolio image](/images/top14-dashboard.png)
-
-## Formula 1 Queries [SQL]
-
-Skills used:
-* Intermediate SQL
-* Database creation
-* Data cleaning
-
-In this project, I answer a range of different questions about Formula 1 racing statistics and history by querying a motor racing dataset. This is primarily used as a way to practice and identify learning opportunities in SQL. Please note this project is dynamic and additional questions will be added as I continue to learn more SQL concepts.
-
-Repository link: [Formula 1 SQL Project](https://github.com/edwalk/portfolio-f1-sql)
-
-## Formula 1 Queries - Visualisation [Tableau]
+## Formula 1 Dashboard [Tableau]
 
 Skills used:
 * Tableau
