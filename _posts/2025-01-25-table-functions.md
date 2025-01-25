@@ -14,6 +14,8 @@ Both functions essentially allow you to extract a minimum and maximum value for 
 
 In WoW 2018 Week 7, it allowed me to seamlessly extract the maximum and minimum sales sum for a given year across the displayed subcategories.
 
+It's important to note that NULL values being NULL, they are not accounted for when determining the WINDOW_MIN value. Even if they are set to display as 0 through a calculated field (using ZN()).
+
 Tableau comes with a large number of table calculations, some of which can be pushed into the SQL with minimal effort (percent of total, differences between rows, percentages), some of which add real value depending on how granular you need your dataset to remain for the purpose of your dashboard(s).
 
 You can find more about this (as I did) here: [Table Calculations](https://help.tableau.com/current/pro/desktop/en-us/functions_functions_tablecalculation.htm)
