@@ -13,10 +13,10 @@ Let me preface this small article by saying that my experiences, described below
 In my current role, all of my dashboards and reporting begins with an SQL query. For each dashboard project, I create a tailored query that brings in data following this logic:
 
 * Bring in the right amount of data to solve the business problem
-* At the right level of granularity (as low as needed)
+* At the right level of granularity (as high as needed, as low as possible)
 * With as much business logic / calculations built into the SQL where possible.
 
-The last point is critical and can depend on how granular your data needs to be. While it may be complicated to build in business logic if your data is at the lowest level of granularity (logic often applies to aggregates), building as much of it as possible into the SQL allows me to sacrifice a bit of query performance (an issue only when the dashboard refreshes periodically) for dashboard performance (an issue every time a user uses the dashboard).
+The last point is critical and can depend on how granular your data needs to be. While it may be complicated to build in business logic if your data requires a high level of granularity (logic often applies to aggregates), building as much of it as possible into the SQL allows me to sacrifice a bit of query performance (an issue only when the dashboard refreshes periodically) for dashboard performance (an issue every time a user uses the dashboard).
 
 The approach often leads to more complex queries and relatively simpler Tableau, where most of the complexity is then directed towards creating a strong UX for stakeholders (navigation, parameter switches, complex filtering). 
 
