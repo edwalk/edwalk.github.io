@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required for static export
   },
-  basePath: '/edwalk.github.io', // Add this if your repo name is edwalk.github.io
-  assetPrefix: '/edwalk.github.io/', // Add this if your repo name is edwalk.github.io
+  basePath: '', // Remove basePath since the repo is username.github.io
+  assetPrefix: '', // Remove assetPrefix since the repo is username.github.io
 }
 
 module.exports = nextConfig
