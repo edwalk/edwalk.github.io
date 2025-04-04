@@ -6,7 +6,7 @@ import { Section, PortfolioSubSection } from '../components/types';
 
 export default function About() {
   const [currentSection, setCurrentSection] = useState<Section>('about');
-  const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('');
+  const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('data');
 
   return (
     <div className="min-h-screen">

@@ -1,2 +1,2 @@
-export type Section = 'about' | 'portfolio' | 'blog';
-export type PortfolioSubSection = '' | 'projects' | 'experience' | 'education'; 
+export type Section = 'blog' | 'about' | 'portfolio';
+export type PortfolioSubSection = 'data' | 'visualisations' | 'vibe-coding'; 
