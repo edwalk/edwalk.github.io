@@ -278,7 +278,7 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
                             }`}
                         >
                           <div>
-                            <div className="text-sm font-medium flex items-center">
+                            <div className="font-medium flex items-center">
                               <span>{item.role}</span>
                               {(item.institution || item.company) && (
                                 <>
@@ -293,9 +293,9 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
                                 </>
                               )}
                             </div>
-                            <div className="text-xs text-gray-400 mb-2">{item.dates}</div>
+                            <div className="text-sm text-gray-400 mb-2">{item.dates}</div>
                             {/* Placeholder for responsibilities */}
-                            <div className="space-y-1 text-sm text-gray-400">
+                            <div className="space-y-1 text-gray-400">
                               {/* Bullet points will go here */}
                             </div>
                           </div>
