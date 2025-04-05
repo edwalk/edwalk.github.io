@@ -187,7 +187,7 @@ export default function Timeline() {
           </div>
 
           {/* Simplified job entries with consistent animation */}
-          <div className="mt-8 pl-4 relative overflow-visible">
+          <div className="mt-2 pl-4 relative overflow-visible">
             {/* If an item is selected, show only that item at the top */}
             {selectedTimelineItem !== null && (
               <div
