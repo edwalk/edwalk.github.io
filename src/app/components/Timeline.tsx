@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useRef, useEffect } from 'react';
 import { TimelineItem } from './types'; // Import the shared type
 
 // Hardcoded timeline data
@@ -46,23 +46,29 @@ const timelineItems: TimelineItem[] = [
   }
 ];
 
+const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
 export default function Timeline() {
   const [isSubheaderExpanded, setIsSubheaderExpanded] = useState(false);
   const [selectedTimelineItem, setSelectedTimelineItem] = useState<number | null>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
-  // Calculate position percentage for timeline highlighting
+  // Keep timeline visualization helpers
   const getTimelinePosition = (date: Date): number => {
-    const startDate = new Date(2015, 0); // January 2015
+    const startDate = new Date(2015, 0);
     const today = new Date();
-    const endDate = new Date(today.getFullYear(), today.getMonth()); // Current month
+    const endDate = new Date(today.getFullYear(), today.getMonth());
     const totalDuration = endDate.getTime() - startDate.getTime();
     const position = date.getTime() - startDate.getTime();
     return (position / totalDuration) * 100;
   };
 
-  // Function to format date
   const formatDate = (date: Date) => {
     return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+  };
+
+  const handleItemClick = (index: number) => {
+    setSelectedTimelineItem(selectedTimelineItem === index ? null : index);
   };
 
   return (
@@ -178,38 +184,85 @@ export default function Timeline() {
                 </span>
               </div>
             </div>
+          </div>
 
-            {/* Job entries */}
-            <div className="mt-2 space-y-3 pl-4">
-              {timelineItems.map((item, index) => (
-                <button
-                  key={item.year + '-' + item.role} // Improved key
-                  onClick={() => setSelectedTimelineItem(selectedTimelineItem === index ? null : index)}
-                  className={`block text-left transition-opacity duration-300 w-full ${selectedTimelineItem === index ? 'opacity-100' : 'opacity-80'
-                    }`}
-                >
-                  <div>
-                    <div className="font-medium flex items-center">
-                      <span>{item.role}</span>
-                      {(item.institution || item.company) && (
-                        <>
-                          <span className="mx-2 text-gray-400">•</span>
-                          <span className="text-gray-300">{item.institution || item.company}</span>
-                          {item.company === "The Chat Shop" && (
-                            <>
-                              <span className="mx-2 text-gray-400">•</span>
-                              <span className="text-gray-400">Remote</span>
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    <div className="text-sm text-gray-400 mb-2">{item.dates}</div>
-                    {/* Placeholder for responsibilities is removed */}
+          {/* Simplified job entries with consistent animation */}
+          <div className="mt-8 pl-4 relative overflow-visible">
+            {/* If an item is selected, show only that item at the top */}
+            {selectedTimelineItem !== null && (
+              <div
+                className="transition-all duration-500 ease-in-out"
+              >
+                <div className="pb-2">
+                  <div
+                    className="font-medium flex items-center cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={() => setSelectedTimelineItem(null)}
+                  >
+                    <span>{timelineItems[selectedTimelineItem].role}</span>
+                    {(timelineItems[selectedTimelineItem].institution || timelineItems[selectedTimelineItem].company) && (
+                      <>
+                        <span className="mx-2 text-gray-400">•</span>
+                        <span className="text-white">
+                          {timelineItems[selectedTimelineItem].institution || timelineItems[selectedTimelineItem].company}
+                        </span>
+                        {timelineItems[selectedTimelineItem].company === "The Chat Shop" && (
+                          <>
+                            <span className="mx-2 text-gray-400">•</span>
+                            <span className="text-gray-400">Remote</span>
+                          </>
+                        )}
+                      </>
+                    )}
                   </div>
-                </button>
-              ))}
-            </div>
+                  <div className="text-sm text-gray-400 mb-2">{timelineItems[selectedTimelineItem].dates}</div>
+                </div>
+
+                {/* Details Section */}
+                <div
+                  ref={detailsRef}
+                  className="mt-2 pl-4 border-l border-gray-600 ml-1 opacity-100 animate-fadeIn"
+                >
+                  <h4 className="font-semibold text-gray-200 mb-1">Details:</h4>
+                  <p className="text-sm text-gray-400 italic">
+                    {loremIpsum}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* List of all jobs when nothing is selected */}
+            {selectedTimelineItem === null && (
+              <div className="space-y-4 transition-opacity duration-500 ease-in-out">
+                {timelineItems.map((item, index) => (
+                  <button
+                    key={item.year + '-' + item.role}
+                    onClick={() => handleItemClick(index)}
+                    className="block text-left w-full transition-opacity duration-300 opacity-80 hover:opacity-100"
+                  >
+                    <div>
+                      <div className="font-medium flex items-center">
+                        <span>{item.role}</span>
+                        {(item.institution || item.company) && (
+                          <>
+                            <span className="mx-2 text-gray-400">•</span>
+                            <span className="text-gray-300">
+                              {item.institution || item.company}
+                            </span>
+                            {item.company === "The Chat Shop" && (
+                              <>
+                                <span className="mx-2 text-gray-400">•</span>
+                                <span className="text-gray-400">Remote</span>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      <div className="text-sm text-gray-400 mb-2">{item.dates}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
