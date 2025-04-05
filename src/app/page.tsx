@@ -4,9 +4,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Content from './components/Content';
 import Footer from './components/Footer';
-
-type Section = 'blog' | 'about' | 'portfolio';
-type PortfolioSubSection = 'data' | 'visualisations' | 'vibe-coding';
+import { Section, PortfolioSubSection } from './components/types';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState<Section>('about');

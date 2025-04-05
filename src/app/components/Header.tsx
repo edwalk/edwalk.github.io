@@ -1,5 +1,4 @@
-type Section = 'blog' | 'about' | 'portfolio';
-type PortfolioSubSection = 'data' | 'visualisations' | 'vibe-coding';
+import { Section, PortfolioSubSection } from './types';
 
 interface HeaderProps {
   currentSection: Section;
