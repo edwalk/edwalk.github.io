@@ -1,32 +1,34 @@
 'use client';
 
-import { useState } from 'react';
-import Header from './components/Header';
-import Content from './components/Content';
-import Footer from './components/Footer';
+import { useState, useEffect } from 'react';
+import LandingPage from './components/LandingPage';
 import { Section, PortfolioSubSection } from './components/types';
 
 export default function Home() {
-  const [currentSection, setCurrentSection] = useState<Section>('about');
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
   const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('data');
 
+  // Update page title when section changes
+  useEffect(() => {
+    const getTitle = () => {
+      if (!currentSection) return 'Edward Walker';
+      const titles: Record<Section, string> = {
+        about: 'About',
+        blog: 'Blog',
+        portfolio: 'Portfolio',
+      };
+      return `Edward Walker | ${titles[currentSection]}`;
+    };
+    document.title = getTitle();
+  }, [currentSection]);
+
+  // Render only LandingPage, passing state and setters
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-col min-h-[50vh]">
-        <Header
-          currentSection={currentSection}
-          onSectionChange={setCurrentSection}
-          currentPortfolioSection={currentPortfolioSection}
-          onPortfolioSectionChange={setCurrentPortfolioSection}
-        />
-        <Content
-          currentSection={currentSection}
-          currentPortfolioSection={currentPortfolioSection}
-        />
-      </div>
-      <div className="mt-16">
-        <Footer />
-      </div>
-    </div>
+    <LandingPage
+      onNavigate={setCurrentSection}
+      currentSection={currentSection}
+      currentPortfolioSection={currentPortfolioSection}
+      onPortfolioSectionChange={setCurrentPortfolioSection}
+    />
   );
 }
