@@ -24,7 +24,7 @@ export default function Home() {
           currentPortfolioSection={currentPortfolioSection}
         />
       </div>
-      <div className="mt-auto">
+      <div className="mt-16">
         <Footer />
       </div>
     </div>

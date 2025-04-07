@@ -46,11 +46,112 @@ const timelineItems: TimelineItem[] = [
   }
 ];
 
+// Education data
+const educationItems = [
+  {
+    year: 2015,
+    degree: "PhD",
+    subject: "Politics",
+    institution: "Durham University",
+    dates: "2015 - 2019",
+    startDate: new Date(2015, 0),
+    endDate: new Date(2019, 0),
+  },
+  {
+    year: 2013,
+    degree: "MA",
+    subject: "International Relations",
+    institution: "Durham University",
+    dates: "2013 - 2014",
+    startDate: new Date(2013, 0),
+    endDate: new Date(2014, 0),
+  },
+  {
+    year: 2010,
+    degree: "BA",
+    subject: "Politics",
+    institution: "University of East Anglia",
+    dates: "2010 - 2013",
+    startDate: new Date(2010, 0),
+    endDate: new Date(2013, 0),
+  }
+];
+
 const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+// Create a type for job details 
+interface JobDetails {
+  [key: number]: React.ReactNode;
+}
+
+// Job-specific details to display when selected
+const jobDetails: JobDetails = {
+  0: ( // Index of Business Intelligence Analyst at Ubisoft
+    <>
+      <p className="text-sm text-gray-400 mb-2">
+        Maintained and expanded a repository of over 50 Tableau dashboards.
+      </p>
+      <p className="text-sm text-gray-400 mb-2">
+        Used SQL to query Snowflake databases to create datasets for dashboards or address ad-hoc data requests from stakeholders.
+      </p>
+      <p className="text-sm text-gray-400 mb-2">
+        Created reports that supported short and long term business strategic thinking.
+      </p>
+      <p className="text-sm text-gray-400">
+        Ingested data from new datasources using SQL and an Airflow-derivated internal tool.
+      </p>
+    </>
+  ),
+  1: ( // Index of Experience Manager at Ubisoft
+    <>
+      <p className="text-sm text-gray-400 mb-2">
+        Drove major customer-facing improvements related to Ubisoft accounts and player safety.
+      </p>
+      <p className="text-sm text-gray-400 mb-2">
+        Led the development of a partnership between Northumbria Police and Ubisoft to enhance player safety initiatives.
+      </p>
+      <p className="text-sm text-gray-400 mb-2">
+        Collaborated with legal teams, ICO and OFCOM to develop compliance strategies for data privacy and online safety legislation.
+      </p>
+      <p className="text-sm text-gray-400">
+        Created and managed the department's internal crisis management process, designed to provide adequate responses to security-sensitive situations involving customers.
+      </p>
+    </>
+  ),
+  2: ( // Index of Customer Support Agent at Ubisoft
+    <p className="text-sm text-gray-400">
+      Provided frontline support to Ubisoft customers across a range of technical and non-technical topics.
+      Delivered assistance through both live and asynchronous support channels.
+    </p>
+  ),
+  3: ( // Index of Live Chat Support Agent (The Chat Shop)
+    <p className="text-sm text-gray-400">
+      Provided support and lead generation chats for a range of Orthodontics practices in the United States.
+    </p>
+  ),
+  4: ( // Index of Postgraduate Tutor (last item in timelineItems array)
+    <>
+      <p className="text-sm text-gray-400 mb-2">
+        Taught approximately 60 undergraduate students at Durham University.
+      </p>
+      <p className="text-sm text-gray-400 mb-2">
+        Focused on teaching critical thinking skills and how to use international relations
+        theories in real life analysis.
+      </p>
+      <p className="text-sm text-gray-400">
+        Received excellent feedback from students and faculty. All students successfully
+        passed the module.
+      </p>
+    </>
+  ),
+  // Will add other positions as we go
+};
 
 export default function Timeline() {
   const [isSubheaderExpanded, setIsSubheaderExpanded] = useState(false);
   const [selectedTimelineItem, setSelectedTimelineItem] = useState<number | null>(null);
+  const [isEducationExpanded, setIsEducationExpanded] = useState(false);
+  const [selectedEducationItem, setSelectedEducationItem] = useState<number | null>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
 
   // Keep timeline visualization helpers
@@ -64,22 +165,27 @@ export default function Timeline() {
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+    // Use explicit English locale and full month name to ensure consistency
+    return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
   };
 
   const handleItemClick = (index: number) => {
     setSelectedTimelineItem(selectedTimelineItem === index ? null : index);
   };
 
+  const handleEducationClick = (index: number) => {
+    setSelectedEducationItem(selectedEducationItem === index ? null : index);
+  };
+
   return (
-    <div className="mt-6">
+    <div>
       <button
         onClick={() => setIsSubheaderExpanded(!isSubheaderExpanded)}
-        className="flex items-center space-x-2 text-lg text-[#f5f1dd] hover:opacity-80 transition-opacity"
+        className="flex items-center space-x-2 text-base text-[#f5f1dd] hover:opacity-80 transition-opacity mt-8"
       >
         <span>My Professional Journey</span>
         <svg
-          className={`w-4 h-4 transform transition-transform ${isSubheaderExpanded ? 'rotate-180' : ''}`}
+          className={`w-3.5 h-3.5 transform transition-transform ${isSubheaderExpanded ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -87,9 +193,14 @@ export default function Timeline() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {isSubheaderExpanded && (
-        <div className="mt-2 opacity-80">
-          <div className="relative mb-4">
+      <div
+        className={`transition-all duration-300 ease-in-out ${isSubheaderExpanded
+          ? 'opacity-100 max-h-[1000px] mt-2'
+          : 'opacity-0 max-h-0 overflow-hidden'
+          }`}
+      >
+        <div className="opacity-80">
+          <div className="relative mb-2">
             {/* Timeline container */}
             <div className="relative h-16">
               {/* Base timeline line */}
@@ -101,7 +212,7 @@ export default function Timeline() {
               {/* Year labels and job date bubbles */}
               <div className="absolute top-0 w-full">
                 {timelineItems.map((item, index) => (
-                  <Fragment key={item.year + '-' + index}> {/* Improved key */}
+                  <Fragment key={item.year + '-' + index}>
                     {/* Start date bubble */}
                     <div
                       className={`absolute rounded-full border transition-all duration-300 ${selectedTimelineItem === index
@@ -186,13 +297,11 @@ export default function Timeline() {
             </div>
           </div>
 
-          {/* Simplified job entries with consistent animation */}
+          {/* Job entries */}
           <div className="mt-2 pl-4 relative overflow-visible">
             {/* If an item is selected, show only that item at the top */}
             {selectedTimelineItem !== null && (
-              <div
-                className="transition-all duration-500 ease-in-out"
-              >
+              <div className="transition-all duration-500 ease-in-out">
                 <div className="pb-2">
                   <div
                     className="font-medium flex items-center cursor-pointer hover:opacity-80 transition-opacity"
@@ -223,9 +332,11 @@ export default function Timeline() {
                   className="mt-2 pl-4 border-l border-gray-600 ml-1 opacity-100 animate-fadeIn"
                 >
                   <h4 className="font-semibold text-gray-200 mb-1">Details:</h4>
-                  <p className="text-sm text-gray-400 italic">
-                    {loremIpsum}
-                  </p>
+                  {jobDetails[selectedTimelineItem] || (
+                    <p className="text-sm text-gray-400 italic">
+                      Details coming soon...
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -265,7 +376,51 @@ export default function Timeline() {
             )}
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Education Section */}
+      <button
+        onClick={() => setIsEducationExpanded(!isEducationExpanded)}
+        className="flex items-center space-x-2 text-base text-[#f5f1dd] hover:opacity-80 transition-opacity mt-8"
+      >
+        <span>My Education</span>
+        <svg
+          className={`w-3.5 h-3.5 transform transition-transform ${isEducationExpanded ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div
+        className={`transition-all duration-300 ease-in-out ${isEducationExpanded
+          ? 'opacity-100 max-h-[500px] mt-2'
+          : 'opacity-0 max-h-0 overflow-hidden'
+          }`}
+      >
+        <div className="opacity-80">
+          <div className="mt-2 pl-4 space-y-4">
+            {educationItems.map((item) => (
+              <div
+                key={item.year + '-' + item.degree}
+                className="block text-left w-full transition-opacity duration-300 opacity-80 hover:opacity-100"
+              >
+                <div>
+                  <div className="font-medium flex items-center">
+                    <span>{item.degree} in {item.subject}</span>
+                    <span className="mx-2 text-gray-400">•</span>
+                    <span className="text-gray-300">
+                      {item.institution}
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-400 mb-2">{item.dates}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 } 
