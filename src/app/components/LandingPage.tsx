@@ -58,11 +58,11 @@ export default function LandingPage({
   onPortfolioSectionChange,
 }: LandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(currentSection === null);
 
   useEffect(() => {
-    setIsVisible(true);
-  }, []);
+    setIsVisible(currentSection === null);
+  }, [currentSection]);
 
   const menuItems: { label: string; section: Section }[] = [
     { label: 'About', section: 'about' },
