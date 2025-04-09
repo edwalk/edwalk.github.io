@@ -83,7 +83,7 @@ export default function LandingPage({
       <ParticlesBackground />
 
       {/* Semi-transparent background overlay */}
-      <div className="fixed inset-0 bg-[#1a1b26] opacity-90 z-0" />
+      <div className="fixed inset-0 bg-[#1a1b26] opacity-80 z-0" />
 
       {/* Menu Button (Visible when menu closed) */}
       {!isMenuOpen && (
