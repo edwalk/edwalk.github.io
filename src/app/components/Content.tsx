@@ -161,6 +161,36 @@ const sideQuestItems: SideQuestItem[] = [
 ];
 // --- End of Side Quest Data ---
 
+// --- Portfolio Project Data ---
+interface ProjectItem {
+  id: number;
+  title: string;
+  linkHref?: string;
+  dates?: string;
+  details: string;
+}
+
+const vibeCodingProjects: ProjectItem[] = [
+  {
+    id: 0,
+    title: "This website",
+    details: "This website was created over a handful of evenings using Cursor, Claude 3.7 Sonnet and Gemini 2.5 Pro."
+  },
+  {
+    id: 1,
+    title: "Ice Hockey Event Tracker",
+    linkHref: "https://github.com/edwalk/ice-hockey-event-tracker",
+    details: "When filming matches for the Whitley Warriors, I needed a way to track events as they happened to facilitate the editing process. This small, portable web app can be used to track events in sync with camera timestamps and exports events to a CSV that can be used to generate markers in Adobe Premiere Pro."
+  },
+  {
+    id: 2,
+    title: "Premiere Pro Marker Importer",
+    linkHref: "https://github.com/edwalk/premiere-pro-marker-importer",
+    details: "This is small JSX script created to support the use of the event tracker above. Used in Adobe Premiere Pro, it fetches events from a CSV file and imports them as markers on the current active sequence, adding relevant timestamps seamlessly to video."
+  }
+];
+// --- End of Portfolio Project Data ---
+
 interface ContentProps {
   currentSection: Section;
   currentPortfolioSection: PortfolioSubSection;
@@ -172,11 +202,13 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
   const [selectedJobIndex, setSelectedJobIndex] = useState<number | null>(null);
   const [aboutSubSection, setAboutSubSection] = useState<'work' | 'education' | 'side-quests' | null>('work');
   const [selectedSideQuestIndex, setSelectedSideQuestIndex] = useState<number | null>(null);
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (currentSection !== 'about') {
       setSelectedJobIndex(null);
       setSelectedSideQuestIndex(null);
+      setSelectedProjectIndex(null);
       setAboutSubSection('work');
     }
 
@@ -198,12 +230,63 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
     setSelectedSideQuestIndex(selectedSideQuestIndex === index ? null : index);
   };
 
+  const handleProjectClick = (index: number) => {
+    setSelectedProjectIndex(selectedProjectIndex === index ? null : index);
+  };
+
   const getPortfolioContent = () => {
-    return (
-      <div className="flex items-center justify-center h-full text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70">
-        Coming Soon...
-      </div>
-    );
+    switch (currentPortfolioSection) {
+      case 'vibe-coding':
+        return (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-3">
+              Vibe Coding Projects
+            </h2>
+            <p className="text-sm text-gray-400 mb-6">
+              I'm an AI enthusiast, exploring new technologies and tools as they emerge every day. The projects below showcase how I've solved real problems using AI-supported solutions.
+            </p>
+            <div className="space-y-6 mt-4 animate-fadeIn">
+              {vibeCodingProjects.map((project) => (
+                <div key={project.id} className="opacity-80 hover:opacity-100 transition-opacity">
+                  <div className="font-medium flex items-center mb-2">
+                    <span>{project.title}</span>
+                    {project.linkHref && (
+                      <a
+                        href={project.linkHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-gray-400 hover:text-gray-200"
+                        aria-label="GitHub repository"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                      </a>
+                    )}
+                    {project.dates && (
+                      <>
+                        <span className="mx-2 text-gray-400">•</span>
+                        <span className="text-gray-300">{project.dates}</span>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-400 ml-0">
+                    {project.details}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      case 'data':
+      case 'visualisations':
+      default:
+        return (
+          <div className="flex items-center justify-center h-full text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70">
+            Coming Soon...
+          </div>
+        );
+    }
   };
 
   const renderAboutContent = () => {
