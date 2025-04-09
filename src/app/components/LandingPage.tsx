@@ -63,9 +63,18 @@ export default function LandingPage({
 }: LandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(currentSection === null);
+  const [expandedPortfolioMenu, setExpandedPortfolioMenu] = useState(false);
+  const [expandedBlogMenu, setExpandedBlogMenu] = useState(false);
 
   useEffect(() => {
     setIsVisible(currentSection === null);
+
+    // Expand appropriate submenu based on current section
+    if (currentSection === 'portfolio') {
+      setExpandedPortfolioMenu(true);
+    } else if (currentSection === 'blog') {
+      setExpandedBlogMenu(true);
+    }
   }, [currentSection]);
 
   const menuItems: { label: string; section: Section }[] = [
@@ -75,7 +84,27 @@ export default function LandingPage({
   ];
 
   const handleMenuClick = (section: Section) => {
-    onNavigate(section);
+    if (currentSection === section) {
+      // Toggle submenu if clicking the active section
+      if (section === 'portfolio') {
+        setExpandedPortfolioMenu(!expandedPortfolioMenu);
+      } else if (section === 'blog') {
+        setExpandedBlogMenu(!expandedBlogMenu);
+      }
+    } else {
+      // Navigate to the section and ensure submenu is expanded
+      onNavigate(section);
+      if (section === 'portfolio') {
+        setExpandedPortfolioMenu(true);
+        setExpandedBlogMenu(false);
+      } else if (section === 'blog') {
+        setExpandedBlogMenu(true);
+        setExpandedPortfolioMenu(false);
+      } else {
+        setExpandedPortfolioMenu(false);
+        setExpandedBlogMenu(false);
+      }
+    }
   };
 
   const toggleMenu = () => {
@@ -153,7 +182,7 @@ export default function LandingPage({
                 >
                   {item.label}
                 </button>
-                {item.section === 'portfolio' && currentSection === 'portfolio' && (
+                {item.section === 'portfolio' && currentSection === 'portfolio' && expandedPortfolioMenu && (
                   <div className="mt-2 ml-4 space-y-2 transition-opacity duration-300">
                     <button
                       onClick={() => {
@@ -190,7 +219,7 @@ export default function LandingPage({
                     </button>
                   </div>
                 )}
-                {item.section === 'blog' && currentSection === 'blog' && (
+                {item.section === 'blog' && currentSection === 'blog' && expandedBlogMenu && (
                   <div className="mt-2 ml-4 space-y-2 transition-opacity duration-300">
                     <button
                       onClick={() => {
