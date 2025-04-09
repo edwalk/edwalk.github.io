@@ -98,7 +98,7 @@ export default function LandingPage({
 
       {/* Left side menu */}
       <nav
-        className={`fixed left-0 top-0 h-screen w-64 bg-[#1a1b26] border-r border-[#dcd7ba]/20 z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed left-0 top-0 h-screen w-64 bg-[#1a1b26]/85 backdrop-blur-md border-r border-[#dcd7ba]/20 z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
         {/* Updated Header within Nav */}
