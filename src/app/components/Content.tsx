@@ -191,6 +191,52 @@ const vibeCodingProjects: ProjectItem[] = [
 ];
 // --- End of Portfolio Project Data ---
 
+// --- Blog Data ---
+interface BlogPost {
+  id: string;
+  title: string;
+  date: string;
+  tags: string[];
+  content: string;
+  excerpt: string;
+}
+
+const blogPosts: BlogPost[] = [
+  {
+    id: "post-2025-04-01",
+    title: "The Future of AI in Web Development",
+    date: "2025-04-01",
+    tags: ["AI", "Web Development", "Future"],
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl.
+
+In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper tellus erat, non ultrices sem tincidunt euismod. Fusce rhoncus porttitor velit, eu bibendum nibh aliquet vel. Fusce lorem leo, vehicula at nibh quis, facilisis accumsan turpis.
+
+Quisque venenatis sit amet libero vel laoreet. Etiam cursus nibh eu lorem semper, id varius eros pharetra. Proin molestie lectus at magna condimentum, eget tincidunt urna semper. Aliquam erat volutpat. Donec eget quam ornare, scelerisque metus eu, elementum purus. Aenean tincidunt vel eros at placerat. Mauris tempor quam id nisi ornare, non ultrices sem pharetra.
+
+Donec faucibus lacus non purus maximus viverra. Aliquam erat volutpat. Praesent ut felis id ligula convallis sodales vel eget ligula. Aliquam id elementum eros. Curabitur ut gravida justo, nec vestibulum lorem. Nullam vel est scelerisque, blandit massa a, congue turpis. Praesent id justo ornare, finibus tortor vitae, elementum massa.
+
+Proin dolor enim, interdum vel porttitor quis, suscipit quis nisl. Ut feugiat sem quis varius lacinia. Quisque vitae nulla porta, ultricies odio at, eleifend eros. Sed vel vehicula odio, id condimentum augue. Etiam dapibus dictum velit eget commodo. Nam sollicitudin, ipsum eu facilisis efficitur, tortor arcu volutpat eros, sed tristique augue massa at odio. Fusce sollicitudin enim vitae velit tincidunt consequat.`,
+    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris."
+  },
+  {
+    id: "post-2024-03-01",
+    title: "Building Interactive User Interfaces with React",
+    date: "2024-03-01",
+    tags: ["React", "UI", "Development"],
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.
+
+Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede.
+
+Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
+
+Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam.
+
+Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat.`,
+    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat."
+  }
+];
+// --- End of Blog Data ---
+
 interface ContentProps {
   currentSection: Section;
   currentPortfolioSection: PortfolioSubSection;
@@ -203,6 +249,7 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
   const [aboutSubSection, setAboutSubSection] = useState<'work' | 'education' | 'side-quests' | null>('work');
   const [selectedSideQuestIndex, setSelectedSideQuestIndex] = useState<number | null>(null);
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
+  const [selectedBlogPostId, setSelectedBlogPostId] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentSection !== 'about') {
@@ -210,6 +257,10 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
       setSelectedSideQuestIndex(null);
       setSelectedProjectIndex(null);
       setAboutSubSection('work');
+    }
+
+    if (currentSection !== 'blog') {
+      setSelectedBlogPostId(null);
     }
 
     if (currentSection !== content) {
@@ -287,6 +338,91 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
           </div>
         );
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const renderBlogList = () => {
+    // Sort posts by date in descending order (newest first)
+    const sortedPosts = [...blogPosts].sort((a, b) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    return (
+      <div className="space-y-8 animate-fadeIn">
+        {sortedPosts.map((post) => (
+          <article key={post.id} className="opacity-80 hover:opacity-100 transition-opacity">
+            <button
+              onClick={() => setSelectedBlogPostId(post.id)}
+              className="text-left w-full"
+            >
+              <h3 className="text-xl font-medium text-[#dcd7ba] hover:underline">{post.title}</h3>
+            </button>
+            <div className="flex items-center my-2 text-sm text-gray-400">
+              <span>{formatDate(post.date)}</span>
+              <span className="mx-2">•</span>
+              <div className="flex flex-wrap gap-1">
+                {post.tags.map((tag, index) => (
+                  <span key={index} className="px-2 py-0.5 bg-[#1a1b26] rounded-full text-xs">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <p className="text-sm text-gray-300">{post.excerpt}</p>
+            <button
+              onClick={() => setSelectedBlogPostId(post.id)}
+              className="mt-2 text-sm text-[#dcd7ba] hover:underline"
+            >
+              Read more →
+            </button>
+          </article>
+        ))}
+      </div>
+    );
+  };
+
+  const renderBlogPost = (postId: string) => {
+    const post = blogPosts.find(p => p.id === postId);
+    if (!post) return null;
+
+    return (
+      <article className="animate-fadeIn">
+        <button
+          onClick={() => setSelectedBlogPostId(null)}
+          className="flex items-center mb-4 text-sm text-[#dcd7ba] hover:underline"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Blog
+        </button>
+        <h2 className="text-2xl font-bold mb-2 text-[#dcd7ba]">{post.title}</h2>
+        <div className="flex items-center my-3 text-sm text-gray-400">
+          <span>{formatDate(post.date)}</span>
+          <span className="mx-2">•</span>
+          <div className="flex flex-wrap gap-1">
+            {post.tags.map((tag, index) => (
+              <span key={index} className="px-2 py-0.5 bg-[#1a1b26] rounded-full text-xs">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        {post.content.split('\n\n').map((paragraph, index) => (
+          <p key={index} className="mb-4 text-gray-300">{paragraph}</p>
+        ))}
+      </article>
+    );
   };
 
   const renderAboutContent = () => {
@@ -385,8 +521,11 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
     switch (content) {
       case 'blog':
         return (
-          <div className="flex items-center justify-center h-full text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70">
-            Coming Soon...
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-3">
+              Blog
+            </h2>
+            {selectedBlogPostId ? renderBlogPost(selectedBlogPostId) : renderBlogList()}
           </div>
         );
       case 'about':
