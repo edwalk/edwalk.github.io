@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment } from 'react';
 // import UnderConstruction from './UnderConstruction'; // Remove import
-import { Section, PortfolioSubSection, TimelineItem } from './types';
+import { Section, PortfolioSubSection, TimelineItem, BlogSubSection } from './types';
 
 // --- Data moved from Timeline.tsx ---
 // Hardcoded timeline data
@@ -240,9 +240,10 @@ Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, cons
 interface ContentProps {
   currentSection: Section;
   currentPortfolioSection: PortfolioSubSection;
+  currentBlogSection: BlogSubSection;
 }
 
-export default function Content({ currentSection, currentPortfolioSection }: ContentProps) {
+export default function Content({ currentSection, currentPortfolioSection, currentBlogSection }: ContentProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [content, setContent] = useState(currentSection);
   const [selectedJobIndex, setSelectedJobIndex] = useState<number | null>(null);
@@ -346,41 +347,60 @@ export default function Content({ currentSection, currentPortfolioSection }: Con
   };
 
   const renderBlogList = () => {
+    // Get filtered posts based on the current blog section
+    let filteredPosts = [...blogPosts];
+
+    if (currentBlogSection !== 'latest') {
+      // Extract the tag name from the subsection
+      const tagName = currentBlogSection.replace('tag-', '').replace(/-/g, ' ');
+
+      // Filter posts that include this tag (case insensitive)
+      filteredPosts = filteredPosts.filter(post =>
+        post.tags.some(tag => tag.toLowerCase() === tagName.toLowerCase())
+      );
+    }
+
     // Sort posts by date in descending order (newest first)
-    const sortedPosts = [...blogPosts].sort((a, b) =>
+    const sortedPosts = filteredPosts.sort((a, b) =>
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
     return (
       <div className="space-y-8 animate-fadeIn">
-        {sortedPosts.map((post) => (
-          <article key={post.id} className="opacity-80 hover:opacity-100 transition-opacity">
-            <button
-              onClick={() => setSelectedBlogPostId(post.id)}
-              className="text-left w-full"
-            >
-              <h3 className="text-xl font-medium text-[#dcd7ba] hover:underline">{post.title}</h3>
-            </button>
-            <div className="flex items-center my-2 text-sm text-gray-400">
-              <span>{formatDate(post.date)}</span>
-              <span className="mx-2">•</span>
-              <div className="flex flex-wrap gap-1">
-                {post.tags.map((tag, index) => (
-                  <span key={index} className="px-2 py-0.5 bg-[#1a1b26] rounded-full text-xs">
-                    {tag}
-                  </span>
-                ))}
+        {sortedPosts.length > 0 ? (
+          sortedPosts.map((post) => (
+            <article key={post.id} className="opacity-80 hover:opacity-100 transition-opacity">
+              <button
+                onClick={() => setSelectedBlogPostId(post.id)}
+                className="text-left w-full"
+              >
+                <h3 className="text-xl font-medium text-[#dcd7ba] hover:underline">{post.title}</h3>
+              </button>
+              <div className="flex items-center my-2 text-sm text-gray-400">
+                <span>{formatDate(post.date)}</span>
+                <span className="mx-2">•</span>
+                <div className="flex flex-wrap gap-1">
+                  {post.tags.map((tag, index) => (
+                    <span key={index} className="px-2 py-0.5 bg-[#1a1b26] rounded-full text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <p className="text-sm text-gray-300">{post.excerpt}</p>
-            <button
-              onClick={() => setSelectedBlogPostId(post.id)}
-              className="mt-2 text-sm text-[#dcd7ba] hover:underline"
-            >
-              Read more →
-            </button>
-          </article>
-        ))}
+              <p className="text-sm text-gray-300">{post.excerpt}</p>
+              <button
+                onClick={() => setSelectedBlogPostId(post.id)}
+                className="mt-2 text-sm text-[#dcd7ba] hover:underline"
+              >
+                Read more →
+              </button>
+            </article>
+          ))
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-gray-400">No posts found for this category.</p>
+          </div>
+        )}
       </div>
     );
   };

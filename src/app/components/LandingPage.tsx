@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Section, PortfolioSubSection } from './types';
+import { Section, PortfolioSubSection, BlogSubSection } from './types';
 import dynamic from 'next/dynamic';
 import Content from './Content';
 import Footer from './Footer';
@@ -49,6 +49,8 @@ interface LandingPageProps {
   currentSection: Section | null;
   currentPortfolioSection: PortfolioSubSection;
   onPortfolioSectionChange: (section: PortfolioSubSection) => void;
+  currentBlogSection: BlogSubSection;
+  onBlogSectionChange: (section: BlogSubSection) => void;
 }
 
 export default function LandingPage({
@@ -56,6 +58,8 @@ export default function LandingPage({
   currentSection,
   currentPortfolioSection,
   onPortfolioSectionChange,
+  currentBlogSection,
+  onBlogSectionChange,
 }: LandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(currentSection === null);
@@ -76,6 +80,18 @@ export default function LandingPage({
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Function to convert tag format for display
+  const formatTagName = (tag: string): string => {
+    if (tag === 'latest') return 'Latest Posts';
+
+    // Remove 'tag-' prefix and capitalize/format the tag name
+    const tagName = tag.replace('tag-', '');
+    return tagName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   };
 
   return (
@@ -174,6 +190,54 @@ export default function LandingPage({
                     </button>
                   </div>
                 )}
+                {item.section === 'blog' && currentSection === 'blog' && (
+                  <div className="mt-2 ml-4 space-y-2 transition-opacity duration-300">
+                    <button
+                      onClick={() => {
+                        onBlogSectionChange('latest');
+                      }}
+                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'latest'
+                        ? 'text-[#dcd7ba] font-bold'
+                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
+                        }`}
+                    >
+                      Latest Posts
+                    </button>
+                    <button
+                      onClick={() => {
+                        onBlogSectionChange('tag-ai');
+                      }}
+                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-ai'
+                        ? 'text-[#dcd7ba] font-bold'
+                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
+                        }`}
+                    >
+                      AI
+                    </button>
+                    <button
+                      onClick={() => {
+                        onBlogSectionChange('tag-web-development');
+                      }}
+                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-web-development'
+                        ? 'text-[#dcd7ba] font-bold'
+                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
+                        }`}
+                    >
+                      Web Development
+                    </button>
+                    <button
+                      onClick={() => {
+                        onBlogSectionChange('tag-react');
+                      }}
+                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-react'
+                        ? 'text-[#dcd7ba] font-bold'
+                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
+                        }`}
+                    >
+                      React
+                    </button>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -201,6 +265,7 @@ export default function LandingPage({
             <Content
               currentSection={currentSection}
               currentPortfolioSection={currentPortfolioSection}
+              currentBlogSection={currentBlogSection}
             />
             <Footer />
           </div>

@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
-import { Section, PortfolioSubSection } from './components/types';
+import { Section, PortfolioSubSection, BlogSubSection } from './components/types';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState<Section | null>(null);
   const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('data');
+  const [currentBlogSection, setCurrentBlogSection] = useState<BlogSubSection>('latest');
 
   // Update page title when section changes
   useEffect(() => {
@@ -29,6 +30,8 @@ export default function Home() {
       currentSection={currentSection}
       currentPortfolioSection={currentPortfolioSection}
       onPortfolioSectionChange={setCurrentPortfolioSection}
+      currentBlogSection={currentBlogSection}
+      onBlogSectionChange={setCurrentBlogSection}
     />
   );
 }
