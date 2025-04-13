@@ -1,6 +1,8 @@
 import { useEffect, useState, Fragment } from 'react';
 // import UnderConstruction from './UnderConstruction'; // Remove import
 import { Section, PortfolioSubSection, TimelineItem, BlogSubSection } from './types';
+import { BlogPost } from '../lib/getBlogPosts';
+import ReactMarkdown from 'react-markdown';
 
 // --- Data moved from Timeline.tsx ---
 // Hardcoded timeline data
@@ -192,58 +194,20 @@ const vibeCodingProjects: ProjectItem[] = [
 // --- End of Portfolio Project Data ---
 
 // --- Blog Data ---
-interface BlogPost {
-  id: string;
-  title: string;
-  date: string;
-  tags: string[];
-  content: string;
-  excerpt: string;
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: "post-2025-04-01",
-    title: "The Future of AI in Web Development",
-    date: "2025-04-01",
-    tags: ["AI", "Web Development", "Future"],
-    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl.
-
-In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper tellus erat, non ultrices sem tincidunt euismod. Fusce rhoncus porttitor velit, eu bibendum nibh aliquet vel. Fusce lorem leo, vehicula at nibh quis, facilisis accumsan turpis.
-
-Quisque venenatis sit amet libero vel laoreet. Etiam cursus nibh eu lorem semper, id varius eros pharetra. Proin molestie lectus at magna condimentum, eget tincidunt urna semper. Aliquam erat volutpat. Donec eget quam ornare, scelerisque metus eu, elementum purus. Aenean tincidunt vel eros at placerat. Mauris tempor quam id nisi ornare, non ultrices sem pharetra.
-
-Donec faucibus lacus non purus maximus viverra. Aliquam erat volutpat. Praesent ut felis id ligula convallis sodales vel eget ligula. Aliquam id elementum eros. Curabitur ut gravida justo, nec vestibulum lorem. Nullam vel est scelerisque, blandit massa a, congue turpis. Praesent id justo ornare, finibus tortor vitae, elementum massa.
-
-Proin dolor enim, interdum vel porttitor quis, suscipit quis nisl. Ut feugiat sem quis varius lacinia. Quisque vitae nulla porta, ultricies odio at, eleifend eros. Sed vel vehicula odio, id condimentum augue. Etiam dapibus dictum velit eget commodo. Nam sollicitudin, ipsum eu facilisis efficitur, tortor arcu volutpat eros, sed tristique augue massa at odio. Fusce sollicitudin enim vitae velit tincidunt consequat.`,
-    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. Nullam euismod, nisi vel tincidunt finibus, nisl nisi tincidunt nisl, eget tincidunt nisl nisl sit amet nisl. In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris."
-  },
-  {
-    id: "post-2024-03-01",
-    title: "Building Interactive User Interfaces with React",
-    date: "2024-03-01",
-    tags: ["React", "UI", "Development"],
-    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.
-
-Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede.
-
-Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
-
-Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam.
-
-Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat.`,
-    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat."
-  }
-];
-// --- End of Blog Data ---
-
+// Note: Blog posts will be passed as props from the parent component
 interface ContentProps {
   currentSection: Section;
   currentPortfolioSection: PortfolioSubSection;
   currentBlogSection: BlogSubSection;
+  blogPosts: BlogPost[];
 }
 
-export default function Content({ currentSection, currentPortfolioSection, currentBlogSection }: ContentProps) {
+export default function Content({
+  currentSection,
+  currentPortfolioSection,
+  currentBlogSection,
+  blogPosts
+}: ContentProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [content, setContent] = useState(currentSection);
   const [selectedJobIndex, setSelectedJobIndex] = useState<number | null>(null);
@@ -410,10 +374,10 @@ export default function Content({ currentSection, currentPortfolioSection, curre
     if (!post) return null;
 
     return (
-      <article className="animate-fadeIn">
+      <article className="prose prose-invert max-w-none animate-fadeIn">
         <button
           onClick={() => setSelectedBlogPostId(null)}
-          className="flex items-center mb-4 text-sm text-[#dcd7ba] hover:underline"
+          className="flex items-center mb-4 text-sm text-[#dcd7ba] hover:underline no-prose"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -427,7 +391,7 @@ export default function Content({ currentSection, currentPortfolioSection, curre
           Back to Blog
         </button>
         <h2 className="text-2xl font-bold mb-2 text-[#dcd7ba]">{post.title}</h2>
-        <div className="flex items-center my-3 text-sm text-gray-400">
+        <div className="flex items-center my-3 text-sm text-gray-400 no-prose">
           <span>{formatDate(post.date)}</span>
           <span className="mx-2">•</span>
           <div className="flex flex-wrap gap-1">
@@ -438,9 +402,7 @@ export default function Content({ currentSection, currentPortfolioSection, curre
             ))}
           </div>
         </div>
-        {post.content.split('\n\n').map((paragraph, index) => (
-          <p key={index} className="mb-4 text-gray-300">{paragraph}</p>
-        ))}
+        <ReactMarkdown>{post.content}</ReactMarkdown>
       </article>
     );
   };

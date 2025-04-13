@@ -1,8 +1,12 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Section, PortfolioSubSection, BlogSubSection } from './types';
 import dynamic from 'next/dynamic';
 import Content from './Content';
 import Footer from './Footer';
+import Header from './Header';
+import { BlogPost } from '../lib/getBlogPosts';
 
 const ParticlesBackground = dynamic(() => import('./Particles'), {
   ssr: false,
@@ -44,23 +48,14 @@ const CloseIcon = ({ onClick }: { onClick: () => void }) => (
   </svg>
 );
 
-interface LandingPageProps {
-  onNavigate: (section: Section | null) => void;
-  currentSection: Section | null;
-  currentPortfolioSection: PortfolioSubSection;
-  onPortfolioSectionChange: (section: PortfolioSubSection) => void;
-  currentBlogSection: BlogSubSection;
-  onBlogSectionChange: (section: BlogSubSection) => void;
+interface ClientLandingPageProps {
+  blogPosts: BlogPost[];
 }
 
-export default function LandingPage({
-  onNavigate,
-  currentSection,
-  currentPortfolioSection,
-  onPortfolioSectionChange,
-  currentBlogSection,
-  onBlogSectionChange,
-}: LandingPageProps) {
+export default function ClientLandingPage({ blogPosts }: ClientLandingPageProps) {
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
+  const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('vibe-coding');
+  const [currentBlogSection, setCurrentBlogSection] = useState<BlogSubSection>('latest');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(currentSection === null);
   const [expandedPortfolioMenu, setExpandedPortfolioMenu] = useState(false);
@@ -93,7 +88,7 @@ export default function LandingPage({
       }
     } else {
       // Navigate to the section and ensure submenu is expanded
-      onNavigate(section);
+      setCurrentSection(section);
       if (section === 'portfolio') {
         setExpandedPortfolioMenu(true);
         setExpandedBlogMenu(false);
@@ -111,13 +106,12 @@ export default function LandingPage({
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Extract unique tags from blog posts
+  const uniqueTags = Array.from(new Set(blogPosts.flatMap(post => post.tags)));
+
   // Function to convert tag format for display
   const formatTagName = (tag: string): string => {
-    if (tag === 'latest') return 'Latest Posts';
-
-    // Remove 'tag-' prefix and capitalize/format the tag name
-    const tagName = tag.replace('tag-', '');
-    return tagName
+    return tag
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
@@ -151,7 +145,7 @@ export default function LandingPage({
           {/* Make name clickable */}
           <button
             onClick={() => {
-              onNavigate(null);
+              setCurrentSection(null);
             }}
             className="text-xl font-bold text-[#dcd7ba] hover:opacity-80 transition-opacity"
           >
@@ -186,7 +180,7 @@ export default function LandingPage({
                   <div className="mt-2 ml-4 space-y-2 transition-opacity duration-300">
                     <button
                       onClick={() => {
-                        onPortfolioSectionChange('data');
+                        setCurrentPortfolioSection('data');
                       }}
                       className={`block text-sm w-full text-left transition-opacity ${currentPortfolioSection === 'data'
                         ? 'text-[#dcd7ba] font-bold'
@@ -197,7 +191,7 @@ export default function LandingPage({
                     </button>
                     <button
                       onClick={() => {
-                        onPortfolioSectionChange('visualisations');
+                        setCurrentPortfolioSection('visualisations');
                       }}
                       className={`block text-sm w-full text-left transition-opacity ${currentPortfolioSection === 'visualisations'
                         ? 'text-[#dcd7ba] font-bold'
@@ -208,7 +202,7 @@ export default function LandingPage({
                     </button>
                     <button
                       onClick={() => {
-                        onPortfolioSectionChange('vibe-coding');
+                        setCurrentPortfolioSection('vibe-coding');
                       }}
                       className={`block text-sm w-full text-left transition-opacity ${currentPortfolioSection === 'vibe-coding'
                         ? 'text-[#dcd7ba] font-bold'
@@ -221,50 +215,20 @@ export default function LandingPage({
                 )}
                 {item.section === 'blog' && currentSection === 'blog' && expandedBlogMenu && (
                   <div className="mt-2 ml-4 space-y-2 transition-opacity duration-300">
-                    <button
-                      onClick={() => {
-                        onBlogSectionChange('latest');
-                      }}
-                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'latest'
-                        ? 'text-[#dcd7ba] font-bold'
-                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
-                        }`}
-                    >
-                      Latest Posts
-                    </button>
-                    <button
-                      onClick={() => {
-                        onBlogSectionChange('tag-ai');
-                      }}
-                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-ai'
-                        ? 'text-[#dcd7ba] font-bold'
-                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
-                        }`}
-                    >
-                      AI
-                    </button>
-                    <button
-                      onClick={() => {
-                        onBlogSectionChange('tag-web-development');
-                      }}
-                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-web-development'
-                        ? 'text-[#dcd7ba] font-bold'
-                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
-                        }`}
-                    >
-                      Web Development
-                    </button>
-                    <button
-                      onClick={() => {
-                        onBlogSectionChange('tag-react');
-                      }}
-                      className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === 'tag-react'
-                        ? 'text-[#dcd7ba] font-bold'
-                        : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
-                        }`}
-                    >
-                      React
-                    </button>
+                    {uniqueTags.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => {
+                          setCurrentBlogSection(`tag-${tag.toLowerCase()}` as BlogSubSection);
+                        }}
+                        className={`block text-sm w-full text-left transition-opacity ${currentBlogSection === `tag-${tag.toLowerCase()}`
+                          ? 'text-[#dcd7ba] font-bold'
+                          : 'text-[#dcd7ba]/60 hover:text-[#dcd7ba]/80'
+                          }`}
+                      >
+                        {formatTagName(tag)}
+                      </button>
+                    ))}
                   </div>
                 )}
               </li>
@@ -275,28 +239,27 @@ export default function LandingPage({
 
       {/* Main content area - Conditionally renders Welcome or Content+Footer */}
       <div className="flex-1 z-20 flex flex-col">
-        {currentSection === null ? (
-          // Welcome Message
-          <main className="flex-grow flex flex-col items-center justify-center p-4">
-            <div
-              className={`text-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'
-                }`}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">Edward Walker</h1>
-              <p className="text-lg md:text-xl opacity-80 max-w-xl mx-auto mb-8">
+        {currentSection !== null && (
+          <Content
+            currentSection={currentSection}
+            currentPortfolioSection={currentPortfolioSection}
+            currentBlogSection={currentBlogSection}
+            blogPosts={blogPosts}
+          />
+        )}
+        {currentSection === null && (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <button
+                onClick={() => setCurrentSection('about')}
+                className="text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70 hover:opacity-100 transition-opacity mb-6"
+              >
+                Edward Walker
+              </button>
+              <p className="text-lg md:text-xl text-[#dcd7ba] opacity-60">
                 Data Analyst. Vibe Coder. Future Enthusiast.
               </p>
             </div>
-          </main>
-        ) : (
-          // Selected Section Content + Footer
-          <div className="flex-grow flex flex-col">
-            <Content
-              currentSection={currentSection}
-              currentPortfolioSection={currentPortfolioSection}
-              currentBlogSection={currentBlogSection}
-            />
-            <Footer />
           </div>
         )}
       </div>

@@ -24,7 +24,27 @@ module.exports = {
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',
       },
+      typography: ({ theme }) => ({
+        invert: {
+          css: {
+            '--tw-prose-body': theme('colors.gray[400]'),
+            fontSize: '0.875rem',
+            lineHeight: '1.25rem',
+            p: {
+              fontSize: 'inherit',
+              lineHeight: 'inherit',
+            },
+            '--tw-prose-headings': theme('colors.foreground'),
+            '--tw-prose-links': theme('colors.foreground'),
+            '--tw-prose-bold': theme('colors.foreground'),
+            '--tw-prose-bullets': theme('colors.gray[500]'),
+            '--tw-prose-counters': theme('colors.gray[500]'),
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } 
