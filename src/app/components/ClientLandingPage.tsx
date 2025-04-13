@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { Section, PortfolioSubSection, BlogSubSection } from './types';
 import dynamic from 'next/dynamic';
 import Content from './Content';
-import Footer from './Footer';
-import Header from './Header';
+// import Footer from './Footer'; // Removed unused import
+// import Header from './Header'; // Removed unused import
 import { BlogPost } from '../lib/getBlogPosts';
 
 const ParticlesBackground = dynamic(() => import('./Particles'), {
