@@ -30,5 +30,6 @@ When trying to implement a "close" button for the detailed table that appears wh
 
 However, in this instance, I was not able to make this work. I was unable to connect that button to a parameter (which dictates whether the granular table appears or not). Instead, I needed to create a sheet with a "X" shape and an associated dashboard action to switch the Show/Hide parameter to "hide", thus hiding the table and the button when clicked.
 
-#TL;DR
+# TL;DR
+
 Through this challenge, I discovered the DZV feature of Tableau, and learned a little bit more about how to format and sort Tree Maps appropriately when using multiple dimensions.
