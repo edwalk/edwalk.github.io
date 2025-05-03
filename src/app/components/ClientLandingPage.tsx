@@ -57,13 +57,22 @@ export default function ClientLandingPage({ blogPosts }: ClientLandingPageProps)
   const [currentPortfolioSection, setCurrentPortfolioSection] = useState<PortfolioSubSection>('vibe-coding');
   const [currentBlogSection, setCurrentBlogSection] = useState<BlogSubSection>('latest');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(currentSection === null);
   const [expandedPortfolioMenu, setExpandedPortfolioMenu] = useState(false);
   const [expandedBlogMenu, setExpandedBlogMenu] = useState(false);
 
+  // Set document title based on current section
   useEffect(() => {
-    setIsVisible(currentSection === null);
+    let sectionTitle = '';
+    if (currentSection === null) {
+      sectionTitle = 'Edward Walker';
+    } else {
+      // Capitalize first letter
+      sectionTitle = `Edward Walker | ${currentSection.charAt(0).toUpperCase()}${currentSection.slice(1)}`;
+    }
+    document.title = sectionTitle;
+  }, [currentSection]);
 
+  useEffect(() => {
     // Expand appropriate submenu based on current section
     if (currentSection === 'portfolio') {
       setExpandedPortfolioMenu(true);

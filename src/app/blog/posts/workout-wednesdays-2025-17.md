@@ -1,5 +1,5 @@
 ---
-id: post-2025-05-03
+id: post-2025-05-03-1
 title: Workout Wednesdays 2025 Week 17
 date: 2025-05-03
 tags: ["Dashboards", "Tableau"]
