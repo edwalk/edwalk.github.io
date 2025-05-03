@@ -6,6 +6,7 @@ tags: ["Dashboards", "Tableau"]
 excerpt: While I don't religiously complete all Workout Wednesday challenges as they are released, the challenge for week 17 this year piqued my interest. The challenge focused on providing a simple, yet very clean and user friendly table to view 4 key Premier League team statistics from the inception of the Premier League in 1993 to 2024.
 ---
 
+[Challenge Link](https://workout-wednesday.com/2025w17tab/) | [My attempt](https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17462309704380/2025-WW17-Bonus)
 While I don't religiously complete all Workout Wednesday challenges as they are released, the challenge for week 17 this year piqued my interest. The challenge focused on providing a simple, yet very clean and user friendly table to view 4 key Premier League team statistics from the inception of the Premier League in 1993 to 2024.
 
 The challenge proved to be quite accessible, yet provided the opportunity to refine and learn a few skills that I have not had the opportunity (or reason) to use frequently when building dashboards at my current place of work.
