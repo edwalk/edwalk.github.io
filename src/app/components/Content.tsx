@@ -191,7 +191,35 @@ const vibeCodingProjects: ProjectItem[] = [
     details: "This is small JSX script created to support the use of the event tracker above. Used in Adobe Premiere Pro, it fetches events from a CSV file and imports them as markers on the current active sequence, adding relevant timestamps seamlessly to video."
   }
 ];
-// --- End of Portfolio Project Data ---
+
+// --- Visualisation Project Data ---
+const visualisationProjects: ProjectItem[] = [
+  {
+    id: 0,
+    title: 'WoW Essentials / 2018-13',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17378890939780/SalesYear',
+    details: '',
+  },
+  {
+    id: 1,
+    title: 'WoW Essentials / 2018-07',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17378411135730/MinMaxSales',
+    details: '',
+  },
+  {
+    id: 2,
+    title: 'WoW Essentials / 2018-04',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17378273548450/WorkoutWednesday2018Week4',
+    details: '',
+  },
+  {
+    id: 3,
+    title: 'WoW 2025-17',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17462309704380/2025-WW17-Bonus',
+    details: '',
+  },
+];
+// --- End of Visualisation Project Data ---
 
 // --- Blog Data ---
 // Note: Blog posts will be passed as props from the parent component
@@ -294,8 +322,88 @@ export default function Content({
             </div>
           </div>
         );
-      case 'data':
       case 'visualisations':
+        return (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-3 flex items-center gap-2">
+              <span className="inline-flex items-center">
+                <span>Workout Wednesday Visualisations</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 64 64"
+                  aria-label="Tableau logo"
+                  className="ml-2"
+                >
+                  <g>
+                    <rect width="64" height="64" fill="none" />
+                    <g>
+                      <g>
+                        <rect x="30" y="6" width="4" height="12" fill="#4F8CA5"/>
+                        <rect x="30" y="46" width="4" height="12" fill="#4F8CA5"/>
+                        <rect x="6" y="30" width="12" height="4" fill="#4F8CA5"/>
+                        <rect x="46" y="30" width="12" height="4" fill="#4F8CA5"/>
+                        <rect x="16" y="16" width="4" height="8" fill="#E97627"/>
+                        <rect x="44" y="16" width="4" height="8" fill="#E97627"/>
+                        <rect x="16" y="40" width="4" height="8" fill="#E97627"/>
+                        <rect x="44" y="40" width="4" height="8" fill="#E97627"/>
+                        <rect x="24" y="24" width="4" height="8" fill="#D13F3F"/>
+                        <rect x="36" y="24" width="4" height="8" fill="#D13F3F"/>
+                        <rect x="24" y="36" width="4" height="8" fill="#D13F3F"/>
+                        <rect x="36" y="36" width="4" height="8" fill="#D13F3F"/>
+                        <rect x="28" y="28" width="8" height="4" fill="#4F8CA5"/>
+                        <rect x="28" y="32" width="8" height="4" fill="#4F8CA5"/>
+                      </g>
+                      <g>
+                        <rect x="12" y="12" width="4" height="4" fill="#4F8CA5"/>
+                        <rect x="48" y="12" width="4" height="4" fill="#4F8CA5"/>
+                        <rect x="12" y="48" width="4" height="4" fill="#4F8CA5"/>
+                        <rect x="48" y="48" width="4" height="4" fill="#4F8CA5"/>
+                        <rect x="20" y="20" width="4" height="4" fill="#E97627"/>
+                        <rect x="40" y="20" width="4" height="4" fill="#E97627"/>
+                        <rect x="20" y="40" width="4" height="4" fill="#E97627"/>
+                        <rect x="40" y="40" width="4" height="4" fill="#E97627"/>
+                        <rect x="28" y="28" width="4" height="4" fill="#D13F3F"/>
+                        <rect x="36" y="28" width="4" height="4" fill="#D13F3F"/>
+                        <rect x="28" y="36" width="4" height="4" fill="#D13F3F"/>
+                        <rect x="36" y="36" width="4" height="4" fill="#D13F3F"/>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+            </h2>
+            <p className="text-sm text-gray-400 mb-6">
+              I occasionally complete Workout Wednesday challenges to keep my Tableau skills fresh and to keep learning the finer points of dashboard design. Workout Wednesday is a popular BI community that provide weekly challenges in Tableau, PowerBI and other BI software. You can find out more about them <a href="https://workout-wednesday.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#dcd7ba]">here</a>.
+            </p>
+            <div className="mt-4 animate-fadeIn">
+              <div className="flex flex-wrap items-center text-xs text-[#dcd7ba] gap-x-2">
+                {visualisationProjects.map((project, idx) => (
+                  <span key={project.id} className="inline-flex items-center">
+                    {project.linkHref ? (
+                      <a
+                        href={project.linkHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                        aria-label={project.title}
+                      >
+                        {project.title}
+                      </a>
+                    ) : (
+                      <span>{project.title}</span>
+                    )}
+                    {idx < visualisationProjects.length - 1 && (
+                      <span className="mx-2 opacity-60">|</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      case 'data':
       default:
         return (
           <div className="flex items-center justify-center h-full text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70">
