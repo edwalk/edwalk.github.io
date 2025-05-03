@@ -218,6 +218,12 @@ const visualisationProjects: ProjectItem[] = [
     linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17462309704380/2025-WW17-Bonus',
     details: '',
   },
+  {
+    id: 4,
+    title: 'WoW 2025-18',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17462921997870/WOW2025Week18?publish=yes',
+    details: '',
+  },
 ];
 // --- End of Visualisation Project Data ---
 
