@@ -265,9 +265,9 @@ export default function ClientLandingPage({ blogPosts }: ClientLandingPageProps)
               >
                 Edward Walker
               </button>
-              <p className="text-lg md:text-xl text-[#dcd7ba] opacity-60">
-                Data Analyst. Vibe Coder. Future Enthusiast.
-              </p>
+                <p className="text-lg md:text-xl text-[#dcd7ba] opacity-60">
+                  Data Analyst. Budding Coder. Future Enthusiast.
+                </p>
             </div>
           </div>
         )}
