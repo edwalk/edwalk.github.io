@@ -1,0 +1,24 @@
+---
+id: post-2025-06-22
+title: Creating some EVE ESI pipelines
+date: 2025-06-22
+tags: ["Data", "Data Engineering"]
+excerpt: In the last few months, I have been increasingly responsible for the creation and maintenance of data pipelines in my workplace. With very little starting knowledge, I been able to learn much about the process of taking data from a source, ingesting it, and transforming it into a usable dataset for further analysis. However, while my workplace has several excellent in-house tools for data pipeline management, these tools do abstract away much of the coding logic that underpins the complex pipelines I am required to maintain (in favour of a simple, GUI-based management interface). While I have come to understand the logic that underpins the ingestion of data into a data warehouse, I have not yet really been able to write an ingestion, write a transformation, or create a pipeline myself. 
+
+---
+
+In the last few months, I have been increasingly responsible for the creation and maintenance of data pipelines in my workplace. With very little starting knowledge, I been able to learn much about the process of taking data from a source, ingesting it, and transforming it into a usable dataset for further analysis. However, while my workplace has several excellent in-house tools for data pipeline management, these tools do abstract away much of the coding logic that underpins the complex pipelines I am required to maintain (in favour of a simple, GUI-based management interface). While I have come to understand the logic that underpins the ingestion of data into a data warehouse, I have not yet really been able to write an ingestion, write a transformation, or create a pipeline myself. 
+
+EVE Online is perfect for this. As one of my little guilty pleasures, it is really great to be able to combine pleasure with clear, learning experiences. Those of you familiar with the game will know that data is a critical part of almost every aspect of the game, and, accordingly, the developers (CCP Games) maintain an extensive, robust and well documented API to access data about many different aspects of the game.
+
+While the game itself provides a pretty comprehensive access to data within the game interface, the community around the game is full of third party tools that make use of data for things like market analysis, trade route planning, combat reports and more. Since developing some rudimentary understanding of data engineering through work, I have been keen to try and recreate some of these tools for my own use.
+
+The first stage in this was to create a simple set of scripts that gather all the information available about the game's world and saves it into a local, sqlite database. The API offer several endpoints to gather information about the game's solar systems, constellations and regions. As this information is unlikely to change often and is critical to several of the solutions I'm looking to design, it made sense to ingest this small amount of data into a local database that can then form the basis for any other location-sensitive data pipelines and interfaces. 
+
+Understanding how to balance storage costs with API usage is going to be a key challenge in this project. The EVE ESI API currently doesn't have a rate limit, but instead uses an error limit beyond which access to the API may be suspended. To address this, I have built in clear guardrails that consistently check for the current error limit, and prevent any API calls from being done if the number of errors remaining is low. 
+
+Beyond the issue of error-limiting, EVE also famously generates very large volumes of data. A quick look at a website such as (Adam4EVE)[https://dev.adam4eve.eu/] shows the volume of data this game can generate. While storing data such as the systems/regions/constellations of the game has minimal impact, I will need to strike a careful balance between relying on local storage (which I may want for the purpose of carrying out times series analyses) and direct API calls for more immediate information. How to strike that balance is something that I will experiment with in the second stage of this project once key, unchangeing dimensional data has all been ingested.
+
+Scheduling will also be a key factor in this project. While I am unlikely to schedule refreshes for the data I've ingested so far, other data will require very frequent refreshes (every 2 minutes, every 5 minutes...). This will give me an opportunity to look into concurrency in Python and will also force me to optimise my queries to return the least amount of data possible in the shortest possible time (while still retaining its usefulness).
+
+I have just uploaded the first 3 scripts to a github repository, as well as some of the helper functions that establish some of the guardrails for good API usage. You can find it (here)[https://www.github.com/edwalk/eve-toolkit].
