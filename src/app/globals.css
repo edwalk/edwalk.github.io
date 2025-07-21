@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background: #1a1b26;
+  --color-foreground: #dcd7ba;
+}
 
 :root {
   --background: #1a1b26;
@@ -41,4 +44,38 @@ button {
   background-color: var(--background);
 }
 
-/* Remove all animation keyframes */
+/* Custom scrollbar styling */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(220, 215, 186, 0.3);
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(220, 215, 186, 0.5);
+}
+
+/* Blog post paragraph spacing */
+.prose p {
+  margin-bottom: 1rem !important;
+  line-height: 1.7 !important;
+  font-size: 0.875rem !important;
+}
+
+/* Additional blog post styling */
+.prose-xs {
+  font-size: 0.875rem;
+}
+
+.prose-xs p {
+  font-size: 0.875rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.6 !important;
+}

@@ -1,6 +1,6 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 // import UnderConstruction from './UnderConstruction'; // Remove import
-import { Section, PortfolioSubSection, TimelineItem, BlogSubSection } from './types';
+import { Section, PortfolioSubSection, TimelineItem, BlogSubSection, AboutSubSection } from './types';
 import { BlogPost } from '../lib/getBlogPosts';
 import ReactMarkdown from 'react-markdown';
 
@@ -108,7 +108,7 @@ const jobDetails: JobDetails = {
         Collaborated with legal teams, ICO and OFCOM to develop compliance strategies for data privacy and online safety legislation.
       </p>
       <p className="text-sm text-gray-400">
-        Created and managed the department's internal crisis management process, designed to provide adequate responses to security-sensitive situations involving customers.
+        Created and managed the department&apos;s internal crisis management process, designed to provide adequate responses to security-sensitive situations involving customers.
       </p>
     </>
   ),
@@ -224,15 +224,22 @@ const visualisationProjects: ProjectItem[] = [
     linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/tableau_17462921997870/WOW2025Week18?publish=yes',
     details: '',
   },
+  {
+    id: 5,
+    title: 'WoW 2025-19',
+    linkHref: 'https://public.tableau.com/app/profile/edward.walker3149/viz/WOW2025W19_17529559740600/ChatGPTReviews',
+    details: '',
+  },
 ];
 // --- End of Visualisation Project Data ---
 
 // --- Blog Data ---
 // Note: Blog posts will be passed as props from the parent component
 interface ContentProps {
-  currentSection: Section;
+  currentSection: Section | null;
   currentPortfolioSection: PortfolioSubSection;
   currentBlogSection: BlogSubSection;
+  currentAboutSection: AboutSubSection;
   blogPosts: BlogPost[];
 }
 
@@ -240,22 +247,23 @@ export default function Content({
   currentSection,
   currentPortfolioSection,
   currentBlogSection,
+  currentAboutSection,
   blogPosts
 }: ContentProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [content, setContent] = useState(currentSection);
+  const [portfolioContent, setPortfolioContent] = useState(currentPortfolioSection);
+  const [blogContent, setBlogContent] = useState(currentBlogSection);
+  const [aboutContent, setAboutContent] = useState(currentAboutSection);
   const [selectedJobIndex, setSelectedJobIndex] = useState<number | null>(null);
-  const [aboutSubSection, setAboutSubSection] = useState<'work' | 'education' | 'side-quests' | null>('work');
   const [selectedSideQuestIndex, setSelectedSideQuestIndex] = useState<number | null>(null);
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
+
   const [selectedBlogPostId, setSelectedBlogPostId] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentSection !== 'about') {
       setSelectedJobIndex(null);
       setSelectedSideQuestIndex(null);
-      setSelectedProjectIndex(null);
-      setAboutSubSection('work');
     }
 
     if (currentSection !== 'blog') {
@@ -266,11 +274,50 @@ export default function Content({
       setIsVisible(false);
       const timer = setTimeout(() => {
         setContent(currentSection);
+        setPortfolioContent(currentPortfolioSection);
+        setBlogContent(currentBlogSection);
+        setAboutContent(currentAboutSection);
         setIsVisible(true);
-      }, 300);
+      }, 250);
       return () => clearTimeout(timer);
     }
-  }, [currentSection, content, currentPortfolioSection]);
+  }, [currentSection, content]);
+
+  // Handle portfolio subsection changes
+  useEffect(() => {
+    if (currentSection === 'portfolio' && currentPortfolioSection !== portfolioContent) {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setPortfolioContent(currentPortfolioSection);
+        setIsVisible(true);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [currentPortfolioSection, portfolioContent, currentSection]);
+
+  // Handle blog subsection changes
+  useEffect(() => {
+    if (currentSection === 'blog' && currentBlogSection !== blogContent) {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setBlogContent(currentBlogSection);
+        setIsVisible(true);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [currentBlogSection, blogContent, currentSection]);
+
+  // Handle about subsection changes
+  useEffect(() => {
+    if (currentSection === 'about' && currentAboutSection !== aboutContent) {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setAboutContent(currentAboutSection);
+        setIsVisible(true);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [currentAboutSection, aboutContent, currentSection]);
 
   const handleJobClick = (index: number) => {
     setSelectedJobIndex(selectedJobIndex === index ? null : index);
@@ -280,12 +327,10 @@ export default function Content({
     setSelectedSideQuestIndex(selectedSideQuestIndex === index ? null : index);
   };
 
-  const handleProjectClick = (index: number) => {
-    setSelectedProjectIndex(selectedProjectIndex === index ? null : index);
-  };
+
 
   const getPortfolioContent = () => {
-    switch (currentPortfolioSection) {
+    switch (portfolioContent) {
       case 'vibe-coding':
         return (
           <div className="space-y-4">
@@ -293,7 +338,7 @@ export default function Content({
               Vibe Coding Projects
             </h2>
             <p className="text-sm text-gray-400 mb-6">
-              I'm an AI enthusiast, exploring new technologies and tools as they emerge every day. The projects below showcase how I've solved real problems using AI-supported solutions.
+              I&apos;m an AI enthusiast, exploring new technologies and tools as they emerge every day. The projects below showcase how I&apos;ve solved real problems using AI-supported solutions.
             </p>
             <div className="space-y-6 mt-4 animate-fadeIn">
               {vibeCodingProjects.map((project) => (
@@ -412,7 +457,7 @@ export default function Content({
       case 'data':
       default:
         return (
-          <div className="flex items-center justify-center h-full text-4xl md:text-6xl font-bold text-[#dcd7ba] opacity-70">
+          <div className="flex items-center justify-center h-full text-lg md:text-xl font-bold text-[#dcd7ba] opacity-70">
             Coming Soon...
           </div>
         );
@@ -428,9 +473,9 @@ export default function Content({
     // Get filtered posts based on the current blog section
     let filteredPosts = [...blogPosts];
 
-    if (currentBlogSection !== 'latest') {
+    if (blogContent !== 'latest') {
       // Extract the tag name from the subsection
-      const tagName = currentBlogSection.replace('tag-', '').replace(/-/g, ' ');
+      const tagName = blogContent.replace('tag-', '').replace(/-/g, ' ');
 
       // Filter posts that include this tag (case insensitive)
       filteredPosts = filteredPosts.filter(post =>
@@ -452,7 +497,7 @@ export default function Content({
                 onClick={() => setSelectedBlogPostId(post.id)}
                 className="text-left w-full"
               >
-                <h3 className="text-xl font-medium text-[#dcd7ba] hover:underline">{post.title}</h3>
+                <h3 className="text-lg font-medium text-[#dcd7ba] hover:underline">{post.title}</h3>
               </button>
               <div className="flex items-center my-2 text-sm text-gray-400">
                 <span>{formatDate(post.date)}</span>
@@ -465,13 +510,6 @@ export default function Content({
                   ))}
                 </div>
               </div>
-              <p className="text-sm text-gray-300">{post.excerpt}</p>
-              <button
-                onClick={() => setSelectedBlogPostId(post.id)}
-                className="mt-2 text-sm text-[#dcd7ba] hover:underline"
-              >
-                Read more →
-              </button>
             </article>
           ))
         ) : (
@@ -516,16 +554,20 @@ export default function Content({
             ))}
           </div>
         </div>
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <div className="px-4 py-2">
+          <div className="prose prose-invert prose-sm max-w-none text-sm [&>p]:mb-4 [&>p]:leading-relaxed">
+            <ReactMarkdown>{post.content}</ReactMarkdown>
+          </div>
+        </div>
       </article>
     );
   };
 
   const renderAboutContent = () => {
-    switch (aboutSubSection) {
+    switch (aboutContent) {
       case 'work':
         return (
-          <div className="space-y-4 mt-4 animate-fadeIn">
+          <div className="space-y-4 animate-fadeIn">
             {timelineItems.map((item, index) => (
               <div key={index}>
                 <button
@@ -560,7 +602,7 @@ export default function Content({
         );
       case 'education':
         return (
-          <div className="space-y-4 mt-4 animate-fadeIn">
+          <div className="space-y-4 animate-fadeIn">
             {educationItems.map((item, index) => (
               <div key={index} className="opacity-80">
                 <div className="font-medium flex items-center">
@@ -575,7 +617,7 @@ export default function Content({
         );
       case 'side-quests':
         return (
-          <div className="space-y-4 mt-4 animate-fadeIn">
+          <div className="space-y-4 animate-fadeIn">
             {sideQuestItems.map((item, index) => (
               <div key={item.id}>
                 <button
@@ -614,42 +656,18 @@ export default function Content({
   };
 
   const getContent = () => {
+    if (!content) return null;
+    
     switch (content) {
       case 'blog':
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-3">
-              Blog
-            </h2>
             {selectedBlogPostId ? renderBlogPost(selectedBlogPostId) : renderBlogList()}
           </div>
         );
       case 'about':
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-3">
-              My story so far...
-            </h2>
-            <nav className="flex space-x-4 border-b border-gray-700 pb-2 mb-4">
-              <button
-                onClick={() => setAboutSubSection('work')}
-                className={`pb-1 transition-colors duration-200 ${aboutSubSection === 'work' ? 'border-b-2 border-[#dcd7ba] text-[#dcd7ba]' : 'text-gray-400 hover:text-gray-200'}`}
-              >
-                Work
-              </button>
-              <button
-                onClick={() => setAboutSubSection('education')}
-                className={`pb-1 transition-colors duration-200 ${aboutSubSection === 'education' ? 'border-b-2 border-[#dcd7ba] text-[#dcd7ba]' : 'text-gray-400 hover:text-gray-200'}`}
-              >
-                Education
-              </button>
-              <button
-                onClick={() => setAboutSubSection('side-quests')}
-                className={`pb-1 transition-colors duration-200 ${aboutSubSection === 'side-quests' ? 'border-b-2 border-[#dcd7ba] text-[#dcd7ba]' : 'text-gray-400 hover:text-gray-200'}`}
-              >
-                Side Quests
-              </button>
-            </nav>
             {renderAboutContent()}
           </div>
         );
@@ -659,14 +677,8 @@ export default function Content({
   };
 
   return (
-    <main
-      className={`p-8 transition-opacity duration-300 flex-grow ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-    >
-      <div className="max-w-4xl mx-auto h-full flex flex-col">
-        <div className="bg-[#1a1b26]/50 rounded-lg p-6 backdrop-blur-sm flex-grow">
-          {getContent()}
-        </div>
-      </div>
-    </main>
+    <div className={`transition-all duration-500 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+      {getContent()}
+    </div>
   );
 } 
