@@ -8,12 +8,20 @@ import ReactMarkdown from 'react-markdown';
 // Hardcoded timeline data
 const timelineItems: TimelineItem[] = [
   {
+    year: 2025,
+    role: "Senior Intelligence Analyst",
+    company: "Infected Blood Compensation Authority",
+    dates: "August 2025 - Present",
+    startDate: new Date(2025, 7),
+    endDate: null,
+  },
+  {
     year: 2023,
     role: "Business Intelligence Analyst",
     company: "Ubisoft",
-    dates: "November 2023 - Present",
+    dates: "November 2023 - August 2025",
     startDate: new Date(2023, 10),
-    endDate: null,
+    endDate: new Date(2025, 7),
   },
   {
     year: 2020,
@@ -81,6 +89,11 @@ interface JobDetails {
 }
 const jobDetails: JobDetails = {
   0: (
+    <p className="text-sm text-gray-400 italic">
+      Details coming soon...
+    </p>
+  ),
+  1: (
     <>
       <p className="text-sm text-gray-400 mb-2">
         Maintained and expanded a repository of over 50 Tableau dashboards.
@@ -96,7 +109,7 @@ const jobDetails: JobDetails = {
       </p>
     </>
   ),
-  1: (
+  2: (
     <>
       <p className="text-sm text-gray-400 mb-2">
         Drove major customer-facing improvements related to Ubisoft accounts and player safety.
@@ -112,18 +125,18 @@ const jobDetails: JobDetails = {
       </p>
     </>
   ),
-  2: (
+  3: (
     <p className="text-sm text-gray-400">
       Provided frontline support to Ubisoft customers across a range of technical and non-technical topics.
       Delivered assistance through both live and asynchronous support channels.
     </p>
   ),
-  3: (
+  4: (
     <p className="text-sm text-gray-400">
       Provided support and lead generation chats for a range of Orthodontics practices in the United States.
     </p>
   ),
-  4: (
+  5: (
     <>
       <p className="text-sm text-gray-400 mb-2">
         Taught approximately 60 undergraduate students at Durham University.
