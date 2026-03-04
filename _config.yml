@@ -1,0 +1,9 @@
+title: Edward Walker
+email:
+description: an accountability and learning journal.
+theme: minima
+
+minima:
+  skin: dark
+
+show_excerpts: true
