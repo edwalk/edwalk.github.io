@@ -2,11 +2,10 @@
 ---
 @import "{{ site.theme }}";
 
-* {
-  font-family: "Courier New", Courier, monospace !important;
+body, a, h1, h2, h3, h4, h5, h6 {
+  color: #b0b8d1 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  body { background-color: #1a1e2e; color: #b0b8d1; }
-  a { color: #7e9cbf; }
+a:hover {
+  color: #7e9cbf !important;
 }
