@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "first post"
+title: "Hello World!"
 date: 2026-03-28
 ---
-your words here.
+Obviously a placeholder. See you soon!
