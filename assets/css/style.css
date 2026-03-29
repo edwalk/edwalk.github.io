@@ -5,3 +5,8 @@
 * {
   font-family: "Courier New", Courier, monospace !important;
 }
+
+@media (prefers-color-scheme: dark) {
+  body { background-color: #1a1e2e; color: #b0b8d1; }
+  a { color: #7e9cbf; }
+}
