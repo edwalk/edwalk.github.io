@@ -1,0 +1,77 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* ===== Catppuccin-inspired palette ===== */
+:root {
+  --bg: #1e1e2e;
+  --surface: #181825;
+  --text: #cdd6f4;
+  --subtext: #a6adc8;
+  --accent: #89b4fa;
+  --border: rgba(49, 50, 68, 0.6);
+}
+
+/* ===== Base ===== */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+/* ===== Layout ===== */
+
+/* DO NOT override wrapper display */
+.wrapper {
+  max-width: 1000px;
+}
+
+/* Sidebar */
+header {
+  background: transparent !important;
+  border-right: 1px solid var(--border);
+  padding-right: 24px;
+  margin-right: 24px;
+  width: 270px; /* keep sidebar width */
+  float: left;
+}
+
+/* Main content */
+section {
+  margin-left: 320px; /* spacing from sidebar */
+  max-width: 700px;
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4 {
+  color: var(--text);
+  margin-top: 0;
+}
+
+p, li {
+  color: var(--subtext);
+}
+
+/* ===== Code ===== */
+code, pre {
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+/* ===== Footer ===== */
+footer {
+  color: var(--subtext);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  padding-top: 10px;
+}
