@@ -2,6 +2,8 @@
 layout: post
 title: "Switching from Polars to Pandas for my NHL schedules API endpoint ingestion"
 date: 2026-04-12
+author: Edward Walker
+tags: python, nhl, api, pandas, polars
 ---
 The very first implementation of my ingestion script for the NHL schedules API endpoint used Polars. In previous roles, I had been impressed by how effective Polars was for large-scale analytical workloads (hundreds of millions of rows), and had started to use it for my (admittedly simple) home projects instead of Pandas.
 
