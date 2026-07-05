@@ -1,0 +1,11 @@
+# Local Hugo build outputs
+/public/
+/resources/
+
+# Internal server locks and caches
+.hugo_build.lock
+hugo_cache/
+
+# System-level file clutter
+.DS_Store
+Thumbs.db
